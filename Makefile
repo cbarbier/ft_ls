@@ -15,20 +15,25 @@ LIB				= libft/libft.a
 CC				= gcc
 CFLAGS			= -Wall -Wextra -Werror
 SRCS			= srcs/main.c
+OBJS			= $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(SRCS)
-	$(CC) $(CFLAGS) -o $(NAME) $(SRCS) -Llibft -lft $(MLX)
+%.o:%.c
+	gcc $(CFLAGS) -c $< -I includes -o $@
+
+$(NAME): $(LIB) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Llibft -lft
 
 $(LIB):
 	make -C libft
 
 clean:
+	/bin/rm -f $(OBJS)
 	make -C libft clean
 
 fclean: clean
-	/bin/rm -rf $(NAME)
+	/bin/rm -f $(NAME)
 	make -C libft fclean
 
 re: fclean all
