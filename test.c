@@ -6,12 +6,24 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:05:09 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/02 18:36:56 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/06 15:47:30 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/ft_ls.h"
 #include <sys/ioctl.h>
+
+static void		ft_lstput(t_list *l)
+{
+	int i;
+
+	i = 0;
+	while (l)
+	{
+		printf("link %i : %s\n", i++, ((t_lsarg *)(l->content))->filename);
+		l = l->next;
+	}
+}
 
 static	void	ft_lstsort(t_list *lst, int	(*fcmp)(t_list *a, t_list *b))
 {

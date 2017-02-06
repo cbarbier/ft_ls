@@ -6,7 +6,7 @@
 #    By: jgengo <jgengo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/18 14:05:46 by jgengo            #+#    #+#              #
-#    Updated: 2017/02/01 15:04:37 by cbarbier         ###   ########.fr        #
+#    Updated: 2017/02/06 20:49:32 by cbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,11 @@ NAME			= ft_ls
 LIB				= libft/libft.a
 CC				= gcc
 CFLAGS			= -Wall -Wextra -Werror
-SRCS			= srcs/main.c
+SRCS			= srcs/main.c \
+				  srcs/ls_parse.c \
+				  srcs/ls_argtolist.c \
+				  srcs/ls_ftolist.c \
+				  srcs/ls_core.c
 OBJS			= $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -34,7 +38,7 @@ clean:
 
 fclean: clean
 	/bin/rm -f $(NAME)
-	make -C libft fclean
+	/bin/rm -f $(LIB)
 
 re: fclean all
 

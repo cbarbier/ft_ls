@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/01 18:36:28 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/06 20:43:52 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,38 @@
 # include <time.h>
 # include <stdio.h>
 # include <string.h>
+# include <errno.h>
+# define USAGE		"usage: ft_ls [-lraRtuLC1] [file ...]"
+# define OPTIONS	"lratRuLC1"
+# define LS_L		1 
+# define LS_R		2 
+# define LS_A		4 
+# define LS_RR		8 
+# define LS_T		16
+# define LS_U		32
+# define LS_LL		64
+# define LS_C		128
+# define LS_1		256
 
 typedef struct dirent		t_dir;
 typedef struct stat			t_stat;
+typedef struct 				s_lsarg
+{
+	char			*filename;
+	char			err;
+	t_stat			fstat;
+}							t_lsarg;
+typedef struct				s_ls
+{
+	short int		opts;
+	t_list			*args;
+	short int		count;
+	t_list			*fails;
+}							t_ls;
+
+int				ls_parse_options(t_ls *ls, char **argv, int argc, char *e);
+int				ls_arg_to_list(t_ls *ls, char **argv,  int start, int end);
+int				ls_core(t_ls *ls, char *filename, t_list *lst);
+t_list			*ls_ftolist(char	*filename);
+
 #endif
