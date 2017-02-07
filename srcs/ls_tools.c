@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_file.c                                    :+:      :+:    :+:   */
+/*   ft_lstools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/06 20:48:04 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/07 16:27:03 by cbarbier         ###   ########.fr       */
+/*   Created: 2017/02/07 17:46:13 by cbarbier          #+#    #+#             */
+/*   Updated: 2017/02/07 18:19:00 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-int		ls_print_file(t_ls *ls, char *filename, t_list *lst)
+char		*mkpth(char *a, char *b)
 {
-	t_lsarg	*data;
+	int		len;
+	char	*res;
 
-	if (ls->count)
-		ft_printf("%s:\n", filename);
-	while (lst)
-	{
-		data = (t_lsarg *)(lst->content);
-		printf("%s\n", (data->err ? strerror(data->err) : data->filename));
-		lst = lst->next;
-	}
-	return (1);
+	len = ft_strlen(a) + ft_strlen(b) + 2;
+	if (!(res = (char *)ft_memalloc((len + 1) * sizeof(char))))
+		return (0);
+	ft_strcat(res, a);
+	ft_strcat(res, "/");
+	ft_strcat(res, b);
+	return (res);
 }

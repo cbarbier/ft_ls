@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/06 20:43:52 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/07 19:38:20 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct stat			t_stat;
 typedef struct 				s_lsarg
 {
 	char			*filename;
+	char			*fullpath;
 	char			err;
 	t_stat			fstat;
 }							t_lsarg;
@@ -50,6 +51,9 @@ typedef struct				s_ls
 int				ls_parse_options(t_ls *ls, char **argv, int argc, char *e);
 int				ls_arg_to_list(t_ls *ls, char **argv,  int start, int end);
 int				ls_core(t_ls *ls, char *filename, t_list *lst);
-t_list			*ls_ftolist(char	*filename);
+t_list			*ls_ftolist(t_ls *ls, char	*filename);
+void			ls_sort(t_ls * ls, t_list	**alist);
+int				ls_print_file(t_ls *ls, char *f, t_list *lst);
+char			*mkpth(char *a, char *b);
 
 #endif

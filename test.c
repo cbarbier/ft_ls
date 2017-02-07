@@ -6,50 +6,42 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:05:09 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/06 15:47:30 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/07 09:35:56 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/ft_ls.h"
 #include <sys/ioctl.h>
 
-static void		ft_lstput(t_list *l)
-{
-	int i;
-
-	i = 0;
-	while (l)
-	{
-		printf("link %i : %s\n", i++, ((t_lsarg *)(l->content))->filename);
-		l = l->next;
-	}
-}
-
-static	void	ft_lstsort(t_list *lst, int	(*fcmp)(t_list *a, t_list *b))
-{
-	t_list		*start;
-	size_t		len;
-	size_t		last;
-	if (!lst)
-		return ;
-	start = lst;
-	len = ft_lstlen(lst);
-	while (len)
-	{
-		lst = start;
-		last = len--;
-		while (lst->next && last--)
-		{
-			if (fcmp(lst, lst->next) > 0)
-				ft_memswap(&(lst->content), &(lst->next->content));	
-			lst = lst->next;
-		}
-	}
-}
-
 static int		ft_cmp(t_list *a, t_list *b)
 {
-	return (ft_strcmp((char *)(a->content), (char *)(b->content)));
+	char *fa;
+	char *fb;
+
+	fa = (char *)(a->content);
+	fb = (char *)(b->content);
+	return (ft_strcmp(fa, fb));
+}
+
+static void		ft_lstreverse(t_list **alst)
+{
+	t_list	*lst;
+	t_list	*tmp;
+	t_list	*tmp2;
+
+	if (!alst)
+		return ;
+	lst = *alst;
+	tmp = 0;
+	while (lst)
+	{
+		tmp2 = lst->next;
+		lst->next = tmp;
+		tmp = lst;
+		lst = tmp2;
+	}
+	if (tmp)
+		*alst = tmp;
 }
 
 int		main(int argc, char **argv)
@@ -88,6 +80,8 @@ int		main(int argc, char **argv)
 	ft_lstsort(lst, &ft_cmp);
 	index = 0;
 	ft_printf("\n{blu}***\nlist @ %#X\n***{no}\n", lst);
+	ft_printf("test of ft_lstreverse\n");
+	ft_lstreverse(&lst);
 	while (lst)
 	{
 		ft_printf("elem %05d content: %s\n", index++, (char *)(lst->content));

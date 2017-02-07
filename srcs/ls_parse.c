@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 11:45:43 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/06 14:28:46 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/07 19:42:31 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int				ls_parse_options(t_ls *ls, char **argv, int argc, char *error)
 	while (index < argc && (stop = ft_strcmp(argv[index], "--"))
 			&& argv[index][0] == '-' && argv[index][1])
 	{
-		printf("%s\n", argv[index]);
 		tmp = argv[index] + 1;
 		while (*tmp && ft_strchr(OPTIONS, *tmp))
 				ls_set_options(ls, *(tmp++));

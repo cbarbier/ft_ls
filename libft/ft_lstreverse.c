@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_file.c                                    :+:      :+:    :+:   */
+/*   ft_lstreverse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/06 20:48:04 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/07 16:27:03 by cbarbier         ###   ########.fr       */
+/*   Created: 2017/02/07 09:37:00 by cbarbier          #+#    #+#             */
+/*   Updated: 2017/02/07 09:37:31 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft_ls.h"
+#include "includes/libft.h"
 
-int		ls_print_file(t_ls *ls, char *filename, t_list *lst)
+void		ft_lstreverse(t_list **alst)
 {
-	t_lsarg	*data;
+	t_list	*lst;
+	t_list	*tmp;
+	t_list	*tmp2;
 
-	if (ls->count)
-		ft_printf("%s:\n", filename);
+	if (!alst)
+		return ;
+	lst = *alst;
+	tmp = 0;
 	while (lst)
 	{
-		data = (t_lsarg *)(lst->content);
-		printf("%s\n", (data->err ? strerror(data->err) : data->filename));
-		lst = lst->next;
+		tmp2 = lst->next;
+		lst->next = tmp;
+		tmp = lst;
+		lst = tmp2;
 	}
-	return (1);
+	if (tmp)
+		*alst = tmp;
 }
