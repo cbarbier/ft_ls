@@ -67,9 +67,7 @@ int			main(int argc, char **argv)
 		printf("ft_ls: illegal option -- %c\n%s\n", error, USAGE);
 		return (0);
 	}
-	if (start == argc)
-		return (ls_core(&ls, ".", ls_ftolist(&ls, ".")));
-	ls.count = argc - start - 1; 
+	ls.count = argc - start - (start == argc ? 0 : 1); 
 	ls_arg_to_list(&ls, argv, start, argc);
 	ft_lstsort(ls.fails, ls_cmp_filename);
 	ft_lstfailput(ls.fails);
