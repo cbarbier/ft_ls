@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/07 19:38:20 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/09 17:55:42 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,24 @@
 # include "../libft/includes/libft.h"
 # include <dirent.h>
 # include <sys/stat.h>
+# include <sys/types.h>
+# include <pwd.h>
+# include <grp.h>
+# include <uuid/uuid.h>
 # include <time.h>
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>
-# define USAGE		"usage: ft_ls [-lraRtuLC1] [file ...]"
-# define OPTIONS	"lratRuLC1"
+# define USAGE		"usage: ft_ls [-lraRtLC1] [file ...]"
+# define OPTIONS	"lratRLC1"
 # define LS_L		1 
 # define LS_R		2 
 # define LS_A		4 
 # define LS_RR		8 
 # define LS_T		16
-# define LS_U		32
-# define LS_LL		64
-# define LS_C		128
-# define LS_1		256
+# define LS_LL		32
+# define LS_C		64
+# define LS_1		128
 
 typedef struct dirent		t_dir;
 typedef struct stat			t_stat;
@@ -50,10 +53,11 @@ typedef struct				s_ls
 
 int				ls_parse_options(t_ls *ls, char **argv, int argc, char *e);
 int				ls_arg_to_list(t_ls *ls, char **argv,  int start, int end);
-int				ls_core(t_ls *ls, char *filename, t_list *lst);
+int				ls_core(t_ls *ls, t_lsarg *data, t_list *lst);
 t_list			*ls_ftolist(t_ls *ls, char	*filename);
 void			ls_sort(t_ls * ls, t_list	**alist);
-int				ls_print_file(t_ls *ls, char *f, t_list *lst);
+int				ls_print_file(t_ls *ls, t_lsarg *d, t_list *lst);
+int				ls_print_l(t_list *lst);
 char			*mkpth(char *a, char *b);
 
 #endif

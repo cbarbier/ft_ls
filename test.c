@@ -6,12 +6,13 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:05:09 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/07 09:35:56 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/08 09:34:22 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/ft_ls.h"
 #include <sys/ioctl.h>
+#include <time.h>
 
 static int		ft_cmp(t_list *a, t_list *b)
 {
@@ -21,27 +22,6 @@ static int		ft_cmp(t_list *a, t_list *b)
 	fa = (char *)(a->content);
 	fb = (char *)(b->content);
 	return (ft_strcmp(fa, fb));
-}
-
-static void		ft_lstreverse(t_list **alst)
-{
-	t_list	*lst;
-	t_list	*tmp;
-	t_list	*tmp2;
-
-	if (!alst)
-		return ;
-	lst = *alst;
-	tmp = 0;
-	while (lst)
-	{
-		tmp2 = lst->next;
-		lst->next = tmp;
-		tmp = lst;
-		lst = tmp2;
-	}
-	if (tmp)
-		*alst = tmp;
 }
 
 int		main(int argc, char **argv)
@@ -68,7 +48,7 @@ int		main(int argc, char **argv)
 	{
 		lstat(ret->d_name, &fstat);
 		ft_printf("inode: %d %s %d\n", ret->d_ino, ret->d_name, ret->d_type);
-		ft_printf("size: %d rights: %b  nblink: %d nblocks: %d\n", fstat.st_size, fstat.st_mode, fstat.st_nlink, fstat.st_blocks);
+		ft_printf("size: %d rights: %b  nblink: %d nblocks: %d mtinme: %s\n", fstat.st_size, fstat.st_mode, fstat.st_nlink, fstat.st_blocks, ctime(&fstat.st_atime));
 	}
 	index = 0;
 	lst = NULL;
@@ -81,7 +61,7 @@ int		main(int argc, char **argv)
 	index = 0;
 	ft_printf("\n{blu}***\nlist @ %#X\n***{no}\n", lst);
 	ft_printf("test of ft_lstreverse\n");
-	ft_lstreverse(&lst);
+//	ft_lstreverse(&lst);
 	while (lst)
 	{
 		ft_printf("elem %05d content: %s\n", index++, (char *)(lst->content));

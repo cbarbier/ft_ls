@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:05:09 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/07 20:32:15 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/09 17:53:53 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	ls_compute(t_ls *ls)
 	while (lst)
 	{
 		data = (t_lsarg *)(lst->content);
-		ls_core(ls, data->filename, ls_ftolist(ls, data->filename));
+		ls_core(ls, data, ls_ftolist(ls, data->filename));
 		lst = lst->next;
 	}
 }

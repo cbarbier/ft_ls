@@ -6,7 +6,7 @@
 #    By: jgengo <jgengo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/18 14:05:46 by jgengo            #+#    #+#              #
-#    Updated: 2017/02/07 18:52:51 by cbarbier         ###   ########.fr        #
+#    Updated: 2017/02/09 13:29:55 by cbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS			= srcs/ls_parse.c \
 				  srcs/ls_ftolist.c \
 				  srcs/ls_sort.c \
 				  srcs/ls_print_file.c \
+				  srcs/ls_print_l.c \
 				  srcs/ls_core.c \
 				  srcs/ls_tools.c \
 				  srcs/ft_ls.c

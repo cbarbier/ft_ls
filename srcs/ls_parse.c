@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 11:45:43 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/07 19:42:31 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/08 09:50:15 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static void		ls_set_options(t_ls *ls, char opt)
 		ls->opts += LS_T;
 	else if (opt == 'R')
 		ls->opts += LS_RR;
-	else if (opt == 'u')
-		ls->opts += LS_U - (ls->opts & LS_T ? LS_T : 0); 
 	else if (opt == 'L')
 		ls->opts += LS_LL;
 	else if (opt == 'C')

@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 15:19:26 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/07 15:47:34 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/09 18:09:02 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int			ls_arg_to_list(t_ls *ls, char **argv,  int start, int end)
 	{
 		bzero(&data, sizeof(t_lsarg));
 		data.filename = ft_strdup(argv[start]);
+		lstat(data.filename, &(data.fstat));
 		if (!opendir(argv[start]) && (data.err = errno)
 			&& errno != EACCES && errno != ENOTDIR)
 			ft_lstpushback(&(ls->fails), ft_lstnew(&data, sizeof(t_lsarg)));
