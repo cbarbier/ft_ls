@@ -25,3 +25,13 @@ char		*mkpth(char *a, char *b)
 	ft_strcat(res, b);
 	return (res);
 }
+
+void		ls_print_linked_file(t_lsarg *d)
+{
+	char	buf[100];
+
+	bzero(buf, 100 * sizeof(char));
+	if ((d->fstat.st_mode & S_IFMT) == S_IFLNK)
+		readlink(d->fullpath, buf, 100 * sizeof(char));
+	ft_printf("%s%s\n", (*buf ? " -> " : ""), buf);
+}

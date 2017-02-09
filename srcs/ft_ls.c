@@ -51,7 +51,8 @@ static void	ls_compute(t_ls *ls)
 	{
 		data = (t_lsarg *)(lst->content);
 		ls_core(ls, data, ls_ftolist(ls, data->filename));
-		lst = lst->next;
+		if ((lst = lst->next))
+			write(1, "\n" , 1);
 	}
 }
 
@@ -67,7 +68,7 @@ int			main(int argc, char **argv)
 		printf("ft_ls: illegal option -- %c\n%s\n", error, USAGE);
 		return (0);
 	}
-	ls.count = argc - start - (start == argc ? 0 : 1); 
+	ls.count = argc - 1; 
 	ls_arg_to_list(&ls, argv, start, argc);
 	ft_lstsort(ls.fails, ls_cmp_filename);
 	ft_lstfailput(ls.fails);

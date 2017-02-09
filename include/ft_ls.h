@@ -41,6 +41,7 @@ typedef struct 				s_lsarg
 	char			*filename;
 	char			*fullpath;
 	char			err;
+	char			is_dir;
 	t_stat			fstat;
 }							t_lsarg;
 typedef struct				s_ls
@@ -59,5 +60,6 @@ void			ls_sort(t_ls * ls, t_list	**alist);
 int				ls_print_file(t_ls *ls, t_lsarg *d, t_list *lst);
 int				ls_print_l(t_list *lst);
 char			*mkpth(char *a, char *b);
+void			ls_print_linked_file(t_lsarg *d);
 
 #endif

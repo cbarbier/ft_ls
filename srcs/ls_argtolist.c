@@ -31,7 +31,7 @@ int			ls_arg_to_list(t_ls *ls, char **argv,  int start, int end)
 		if (!opendir(argv[start]) && (data.err = errno)
 			&& errno != EACCES && errno != ENOTDIR)
 			ft_lstpushback(&(ls->fails), ft_lstnew(&data, sizeof(t_lsarg)));
-		else
+		else if ((data.is_dir = 1))		
 			ft_lstpushback(&(ls->args), ft_lstnew(&data, sizeof(t_lsarg)));
 		start++;
 	}

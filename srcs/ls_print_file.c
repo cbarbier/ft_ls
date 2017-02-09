@@ -17,7 +17,7 @@ int		ls_print_file(t_ls *ls, t_lsarg *d, t_list *lst)
 {
 	t_lsarg	*data;
 
-	if (d->fstat.st_mode & S_IFDIR)
+	if (ls->count > 1 && d->is_dir && (d->fstat.st_mode & S_IFDIR))
 		ft_printf("%s:\n", d->filename);
 	if (ls->opts & LS_L)
 		return (ls_print_l(lst));

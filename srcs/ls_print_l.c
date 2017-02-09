@@ -57,19 +57,19 @@ static void	set_lns(t_list *lst, int *thogs)
 
 static char	set_typeoffile(t_stat *st)
 {
-	if (st->st_mode & S_IFREG)
-		return ('-');
-	else if (st->st_mode & S_IFDIR)
-		return ('d');
-	else if (st->st_mode & S_IFLNK)
-		return ('l');
-	else if (st->st_mode & S_IFIFO)
+	if ((st->st_mode & S_IFMT) == S_IFIFO)
 		return ('p');
-	else if (st->st_mode & S_IFCHR)
+	else if ((st->st_mode & S_IFMT) == S_IFCHR)
 		return ('c');
-	else if (st->st_mode & S_IFBLK)
+	else if ((st->st_mode & S_IFMT) == S_IFDIR)
+		return ('d');
+	else if ((st->st_mode & S_IFMT) == S_IFBLK)
 		return ('b');
-	else if (st->st_mode & S_IFSOCK)
+	else if ((st->st_mode & S_IFMT) == S_IFREG)
+		return ('-');
+	else if ((st->st_mode & S_IFMT) == S_IFLNK)
+		return ('l');
+	else if ((st->st_mode & S_IFMT) == S_IFSOCK)
 		return ('s');
 	else
 		return ('-');
@@ -119,7 +119,8 @@ int			ls_print_l(t_list *lst)
 		ft_printf("%*s  ", thogs[3], getgrgid(data->fstat.st_gid)->gr_name);
 		ft_printf("%*d ", thogs[4], data->fstat.st_size);
 		print_date(tmp, data->fstat.st_mtime);
-		ft_printf("%s\n", data->filename);
+		ft_printf("%s", data->filename);
+		ls_print_linked_file(data);
 		lst = lst->next;
 	}
 	return (0);
