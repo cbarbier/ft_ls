@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:05:09 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/09 17:53:53 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/10 19:38:30 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ft_lstfailput(t_list *l)
 	while (l)
 	{
 		ar = (t_lsarg *)(l->content);
-		printf("ft_ls: %s: %s\n", ar->filename, strerror(ar->err));
+		ft_printf("ft_ls: %s: %s\n", ar->filename, strerror(ar->err));
 		ft_strdel(&(ar->filename));
 		elm = l->next;
 		free(l->content);
@@ -65,11 +65,11 @@ int			main(int argc, char **argv)
 	ft_bzero(&ls, sizeof(t_ls));
 	if ((start = ls_parse_options(&ls, argv, argc, &error)) < 0)
 	{
-		printf("ft_ls: illegal option -- %c\n%s\n", error, USAGE);
+		ft_printf("ft_ls: illegal option -- %c\n%s\n", error, USAGE);
 		return (0);
 	}
-	ls.count = argc - 1; 
 	ls_arg_to_list(&ls, argv, start, argc);
+	ls.count = argc - start;
 	ft_lstsort(ls.fails, ls_cmp_filename);
 	ft_lstfailput(ls.fails);
 	ls_compute(&ls);

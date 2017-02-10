@@ -6,13 +6,13 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 10:06:07 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/09 17:25:47 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/10 19:24:16 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-static void	print_date(char *tmp, time_t	fdate)
+static void	print_date(char *tmp, time_t fdate)
 {
 	time_t	curtime;
 	char	*snow;
@@ -33,26 +33,29 @@ static void	print_date(char *tmp, time_t	fdate)
 	ft_printf("%s ", tmp);
 }
 
-static void	set_lns(t_list *lst, int *thogs)
+static void	set_lns(t_list *lst, int *thogsmM)
 {
 	int 	res;
 	t_stat	*st;
 
-	bzero(thogs, 5 * sizeof(int));
+	bzero(thogsmM, 7 * sizeof(int));
 	while (lst)
 	{
 		st = &(((t_lsarg *)(lst->content))->fstat);
-		thogs[0] += st->st_blocks;
-		if ((res = ft_nblen(st->st_nlink)) > thogs[1])
-			thogs[1] = res;
-		if ((res = ft_strlen(getpwuid(st->st_uid)->pw_name)) > thogs[2])
-			thogs[2] = res;
-		if ((res = ft_strlen(getgrgid(st->st_gid)->gr_name)) > thogs[3])
-			thogs[3] = res;
-		if ((res = ft_nblen(st->st_size)) > thogs[4])
-			thogs[4] = res;
+		thogsmM[0] += st->st_blocks;
+		if ((res = ft_nblen(st->st_nlink)) > thogsmM[1])
+			thogsmM[1] = res;
+		if ((res = ft_strlen(getpwuid(st->st_uid)->pw_name)) > thogsmM[2])
+			thogsmM[2] = res;
+		if ((res = ft_strlen(getgrgid(st->st_gid)->gr_name)) > thogsmM[3])
+			thogsmM[3] = res;
+		if ((res = ft_nblen(st->st_size)) > thogsmM[4])
+			thogsmM[4] = res;
+		ls_set_lns_min_maj(thogsmM, st);
 		lst = lst->next;
 	}
+	if (thogsmM[4] < (res = thogsmM[5] + thogsmM[6] + 2))
+		thogsmM[4] = res;
 }
 
 static char	set_typeoffile(t_stat *st)
@@ -103,21 +106,20 @@ static void	set_rights(char *tmp, t_lsarg *data)
 int			ls_print_l(t_list *lst)
 {
 	char		tmp[13];
-	int			thogs[5];
+	int			thogsmM[7];
 	t_lsarg		*data;
 
-	set_lns(lst, thogs);
-	if (lst && ((t_lsarg *)(lst->content))->fstat.st_mode & S_IFDIR)
-		ft_printf("total %d\n", thogs[0]);
+	set_lns(lst, thogsmM);
+	if (lst)
+		ft_printf("total %d\n", thogsmM[0]);
 	while (lst)
 	{
 		data = (t_lsarg *)(lst->content);
 		set_rights(tmp, data);
-		ft_printf("%s ", tmp);
-		ft_printf("%*d ", thogs[1], data->fstat.st_nlink);
-		ft_printf("%*s  ", thogs[2], getpwuid(data->fstat.st_uid)->pw_name);
-		ft_printf("%*s  ", thogs[3], getgrgid(data->fstat.st_gid)->gr_name);
-		ft_printf("%*d ", thogs[4], data->fstat.st_size);
+		ft_printf("%s %*d ", tmp, thogsmM[1], data->fstat.st_nlink);
+		ft_printf("%-*s  ", thogsmM[2], getpwuid(data->fstat.st_uid)->pw_name);
+		ft_printf("%-*s  ", thogsmM[3], getgrgid(data->fstat.st_gid)->gr_name);
+		ls_print_size_min_maj(tmp[0],thogsmM + 4, &(data->fstat));
 		print_date(tmp, data->fstat.st_mtime);
 		ft_printf("%s", data->filename);
 		ls_print_linked_file(data);

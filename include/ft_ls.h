@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/09 17:55:42 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/10 19:15:35 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ int				ls_arg_to_list(t_ls *ls, char **argv,  int start, int end);
 int				ls_core(t_ls *ls, t_lsarg *data, t_list *lst);
 t_list			*ls_ftolist(t_ls *ls, char	*filename);
 void			ls_sort(t_ls * ls, t_list	**alist);
-int				ls_print_file(t_ls *ls, t_lsarg *d, t_list *lst);
+int				ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth);
 int				ls_print_l(t_list *lst);
 char			*mkpth(char *a, char *b);
 void			ls_print_linked_file(t_lsarg *d);
+int				ls_print_size_min_maj(char t, int	*mM, t_stat *st);
+void			ls_set_lns_min_maj(int *thogsmM, t_stat *st);
 
 #endif

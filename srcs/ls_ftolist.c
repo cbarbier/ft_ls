@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 18:31:14 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/08 17:49:57 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/10 13:15:32 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ t_list		*ls_ftolist(t_ls *ls, char	*filename)
 
 	bzero(&data, sizeof(t_lsarg));
 	data.filename = ft_strdup(filename);
+	data.fullpath = ft_strdup(filename);
 	lstat(filename, &(data.fstat));
-	if (!(data.fstat.st_mode & S_IFDIR))
+	if (!((data.fstat.st_mode & S_IFMT) == S_IFDIR))
 		return (ft_lstnew(&data, sizeof(t_lsarg)));
 	if (!(directory = opendir(filename)))
 	{

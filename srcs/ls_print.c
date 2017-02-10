@@ -1,34 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_file.c                                    :+:      :+:    :+:   */
+/*   ls_print.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 20:48:04 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/09 17:59:25 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/10 19:26:39 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-
-int		ls_print_file(t_ls *ls, t_lsarg *d, t_list *lst)
+static	int	ls_print_helper(t_ls *ls, t_lsarg *data)
 {
-	t_lsarg	*data;
+	if (ls->args)
+		ft_printf("%s\n", data->filename);
+	return (1);
+}
 
-	if (ls->count > 1 && d->is_dir && (d->fstat.st_mode & S_IFDIR))
-		ft_printf("%s:\n", d->filename);
-	if (ls->opts & LS_L)
-		return (ls_print_l(lst));
+
+static int	ls_print_classic(t_ls *ls, t_list *lst)
+{
+	t_lsarg		*data;
+
 	while (lst)
 	{
 		data = (t_lsarg *)(lst->content);
-		if (data->err)
-			ft_printf("ft_ls: %s: %s\n", data->filename, strerror(data->err));
-		else
-			ft_printf("%s\n", data->filename);
+		ls_print_helper(ls, data);
 		lst = lst->next;
 	}
 	return (1);
 }
+
+int			ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth)
+{
+	if (ls->count > 1 || depth)
+		ft_printf("%s:\n", d->fullpath);
+	if (d->err)
+		ft_printf("ft_ls: %s: %s\n", d->filename, strerror(d->err));
+	else if (ls->opts & LS_L)
+		ls_print_l(lst);
+	else
+		ls_print_classic(ls, lst);
+	return (1);
+}
+
