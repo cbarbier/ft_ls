@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 10:06:07 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/10 19:24:16 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/12 02:35:17 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	print_date(char *tmp, time_t fdate)
 	sfil = ctime(&fdate);
 	bzero(tmp, 13 * sizeof(char));
 	ft_strncat(tmp, sfil + 4, 3);
-	ft_strcat(tmp, (ft_isdigit(sfil[10]) ? " " : "  "));
-	ft_strncat(tmp, sfil + 9, ft_isdigit(sfil[10]) ? 2 : 1);
+	ft_strcat(tmp, (ft_isdigit(sfil[9]) ? " " : "  "));
+	ft_strncat(tmp, sfil + 8, ft_isdigit(sfil[9]) ? 2 : 1);
 	ft_strcat(tmp, " ");
 	if (!(curtime - fdate > 15778458 || fdate - curtime > 3600))
 		ft_strncat(tmp, sfil + 11, 5);
