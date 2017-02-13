@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 10:06:07 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/12 19:16:57 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/13 20:32:37 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int			ls_print_l(t_ls *ls, t_lsarg *d, t_list *lst)
 		(ls->opts & LS_O) && (ls->opts & LS_G) ? write(1, "  ", 2) : 0;
 		ls_print_size_min_maj(tmp[0], thogsmm + 4, &(data->fstat));
 		print_date(tmp, data->fstat.st_mtime);
-		ft_printf("%s", data->filename);
+		ls_print_helper(ls, data, 0);
 		ls_print_linked_file(data);
 		lst = lst->next;
 	}

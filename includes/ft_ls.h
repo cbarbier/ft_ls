@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/13 11:48:37 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/13 20:32:19 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>
-# define USAGE		"usage: ft_ls [-lraRtC1goG] [file ...]"
-# define OPTIONS	"lratRC1goG"
+# include <sys/ioctl.h>
+# define USAGE		"usage: ft_ls [-lraRtC1goGFS] [file ...]"
+# define OPTIONS	"lratRC1goGFS"
 # define LS_L		1 
 # define LS_R		2 
 # define LS_A		4 
@@ -35,6 +36,8 @@
 # define LS_G		128
 # define LS_O		256
 # define LS_GG		512
+# define LS_FF		1024
+# define LS_SS		2048
 
 typedef struct dirent		t_dir;
 typedef struct stat			t_stat;
@@ -67,5 +70,7 @@ void			ls_print_linked_file(t_lsarg *d);
 int				ls_print_size_min_maj(char t, int	*mM, t_stat *st);
 void			ls_set_lns_min_maj(int *thogsmM, t_stat *st);
 void			ls_del(void	*e, size_t s);
+int				ls_print_c(t_ls *ls, t_list *lst);
+int				ls_print_helper(t_ls *ls, t_lsarg *d, int w);
 
 #endif
