@@ -6,19 +6,30 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 17:46:13 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/10 16:07:52 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/12 16:59:01 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft_ls.h"
+#include "../includes/ft_ls.h"
+
+void		ls_del(void *e, size_t s)
+{
+	t_lsarg		*d;
+
+	d = (t_lsarg *)e;
+	ft_strdel(&(d->filename));
+	ft_strdel(&(d->fullpath));
+	bzero(e, s);
+	free(e);
+}
 
 char		*mkpth(char *a, char *b)
 {
 	int		len;
 	char	*res;
 
-	len = ft_strlen(a) + ft_strlen(b) + 2;
-	if (!(res = (char *)ft_memalloc((len + 1) * sizeof(char))))
+	len = ft_strlen(a) + ft_strlen(b) + 1;
+	if (!(res = ft_strnew(len)))
 		return (0);
 	ft_strcat(res, a);
 	ft_strcat(res, "/");
@@ -36,24 +47,24 @@ void		ls_print_linked_file(t_lsarg *d)
 	ft_printf("%s%s\n", (*buf ? " -> " : ""), buf);
 }
 
-int			ls_print_size_min_maj(char t, int *smM, t_stat *st)
+int			ls_print_size_min_maj(char t, int *smm, t_stat *st)
 {
 	if (t != 'c' && t != 'b')
-		return (ft_printf("%*d ", smM[0], st->st_size));
-	ft_printf("%*d, ", smM[1], ((st->st_rdev >> 24) & 0xff));
-	ft_printf("%*d ", smM[2], st->st_rdev & 0xffffff);
+		return (ft_printf("%*d ", smm[0], st->st_size));
+	ft_printf("%*d, ", smm[1], ((st->st_rdev >> 24) & 0xff));
+	ft_printf("%*d ", smm[2], st->st_rdev & 0xffffff);
 	return (0);
 }
 
-void		ls_set_lns_min_maj(int *thogsmM, t_stat *st)
+void		ls_set_lns_min_maj(int *thogsmm, t_stat *st)
 {
 	int		res;
 
 	if ((st->st_mode & S_IFMT) != S_IFCHR
 			&& (st->st_mode & S_IFMT) != S_IFBLK)
 		return ;
-	if ((res = ft_nblen((st->st_rdev >> 24) & 0xff)) > thogsmM[5])
-		thogsmM[5] = res;
-	if ((res = ft_nblen(st->st_rdev & 0xffffff)) > thogsmM[6])
-		thogsmM[6] = res;
+	if ((res = ft_nblen((st->st_rdev >> 24) & 0xff)) > thogsmm[5])
+		thogsmm[5] = res;
+	if ((res = ft_nblen(st->st_rdev & 0xffffff)) > thogsmm[6])
+		thogsmm[6] = res;
 }

@@ -6,11 +6,11 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 20:48:43 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/08 09:51:13 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/12 14:50:14 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft_ls.h"
+#include "../includes/ft_ls.h"
 
 static int		ls_cmp_filename(t_list *a, t_list *b)
 {

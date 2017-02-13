@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/10 19:15:35 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/13 11:48:37 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,18 @@
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>
-# define USAGE		"usage: ft_ls [-lraRtLC1] [file ...]"
-# define OPTIONS	"lratRLC1"
+# define USAGE		"usage: ft_ls [-lraRtC1goG] [file ...]"
+# define OPTIONS	"lratRC1goG"
 # define LS_L		1 
 # define LS_R		2 
 # define LS_A		4 
 # define LS_RR		8 
 # define LS_T		16
-# define LS_LL		32
-# define LS_C		64
-# define LS_1		128
+# define LS_C		32
+# define LS_1		64
+# define LS_G		128
+# define LS_O		256
+# define LS_GG		512
 
 typedef struct dirent		t_dir;
 typedef struct stat			t_stat;
@@ -49,6 +51,7 @@ typedef struct				s_ls
 	short int		opts;
 	t_list			*args;
 	short int		count;
+	int				index;
 	t_list			*fails;
 }							t_ls;
 
@@ -58,10 +61,11 @@ int				ls_core(t_ls *ls, t_lsarg *data, t_list *lst);
 t_list			*ls_ftolist(t_ls *ls, char	*filename);
 void			ls_sort(t_ls * ls, t_list	**alist);
 int				ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth);
-int				ls_print_l(t_list *lst);
+int				ls_print_l(t_ls *ls, t_lsarg *data,  t_list *lst);
 char			*mkpth(char *a, char *b);
 void			ls_print_linked_file(t_lsarg *d);
 int				ls_print_size_min_maj(char t, int	*mM, t_stat *st);
 void			ls_set_lns_min_maj(int *thogsmM, t_stat *st);
+void			ls_del(void	*e, size_t s);
 
 #endif
