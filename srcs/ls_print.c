@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 20:48:04 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/14 14:51:51 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/14 19:33:38 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,16 @@ static int	ls_set_color(char *tmp, t_stat *st)
 int			ls_print_helper(t_ls *ls, t_lsarg *d, int w)
 {
 	char		tmp[42];
+	int			width;
 
 	if (d->err)
 		return (ft_printf("ft_ls: %s: %s", d->filename, strerror(d->err)));
 	if ((ls->opts & LS_GG) && ls_set_color(tmp, &(d->fstat)))
-		ft_printf(tmp, w, d->filename);
+	{
+		ft_printf(tmp, 0, d->filename);
+		if (w && (width = -w - ft_strlen(d->filename)))
+			ft_printf("%*c", width, ' ');
+	}
 	else
 		ft_printf("%*s", w, d->filename);
 	return (1);
@@ -65,7 +70,7 @@ int			ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth)
 		ft_printf("%s:\n", d->fullpath);
 	if (ls->opts & LS_L)
 		ls_print_l(ls, d, lst);
-	else if (ls->opts & LS_C)
+	else if (ls->opts & LS_CC)
 		ls_print_c(ls, lst);
 	else
 		ls_print_classic(ls, lst);

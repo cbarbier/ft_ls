@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/14 15:02:18 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/14 19:10:21 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define LS_A		4
 # define LS_RR		8
 # define LS_T		16
-# define LS_C		32
+# define LS_CC		32
 # define LS_1		64
 # define LS_G		128
 # define LS_O		256
