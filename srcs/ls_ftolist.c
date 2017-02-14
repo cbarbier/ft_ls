@@ -6,11 +6,30 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 18:31:14 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/13 12:06:09 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/14 14:43:43 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+static char		*ls_handle_dashff(t_ls *ls, t_stat *st, char *filename)
+{
+	if (!(ls->opts & LS_FF))
+		return (ft_strdup(filename));
+	if ((st->st_mode & S_IFMT) == S_IFDIR)
+		return (ft_strjoinzfree(filename, "/", 0));
+	else if ((st->st_mode & S_IFMT) == S_IFLNK)
+		return (ft_strjoinzfree(filename, "@", 0));
+	else if (st->st_mode & S_IXUSR)
+		return (ft_strjoinzfree(filename, "*", 0));
+	else if ((st->st_mode & S_IFMT) == S_IFSOCK)
+		return (ft_strjoinzfree(filename, "=", 0));
+	else if ((st->st_mode & S_IFMT) == S_IFWHT)
+		return (ft_strjoinzfree(filename, "%", 0));
+	else if ((st->st_mode & S_IFMT) == S_IFIFO)
+		return (ft_strjoinzfree(filename, "|", 0));
+	return (ft_strdup(filename));
+}
 
 static t_list	*read_to_list(t_ls *ls, char *filename, DIR *directory)
 {
@@ -24,9 +43,9 @@ static t_list	*read_to_list(t_ls *ls, char *filename, DIR *directory)
 		if (!(!(ls->opts & LS_A) && (!ft_strncmp(ret->d_name, ".", 1))))
 		{
 			bzero(&data, sizeof(t_lsarg));
-			data.filename = ft_strdup(ret->d_name);
 			data.fullpath = mkpth(filename, ret->d_name);
 			lstat(data.fullpath, &(data.fstat));
+			data.filename = ls_handle_dashff(ls, &(data.fstat), ret->d_name);
 			data.is_dir = (data.fstat.st_mode & S_IFMT) == S_IFDIR ? 1 : 0;
 			ft_lstadd(&lst, ft_lstnew(&data, sizeof(t_lsarg)));
 		}

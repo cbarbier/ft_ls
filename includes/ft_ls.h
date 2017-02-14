@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/13 20:32:19 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/14 15:02:18 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # include <sys/ioctl.h>
 # define USAGE		"usage: ft_ls [-lraRtC1goGFS] [file ...]"
 # define OPTIONS	"lratRC1goGFS"
-# define LS_L		1 
-# define LS_R		2 
-# define LS_A		4 
-# define LS_RR		8 
+# define LS_L		1
+# define LS_R		2
+# define LS_A		4
+# define LS_RR		8
 # define LS_T		16
 # define LS_C		32
 # define LS_1		64
@@ -39,38 +39,41 @@
 # define LS_FF		1024
 # define LS_SS		2048
 
-typedef struct dirent		t_dir;
-typedef struct stat			t_stat;
-typedef struct 				s_lsarg
+typedef struct dirent	t_dir;
+typedef struct stat		t_stat;
+typedef struct			s_lsarg
 {
 	char			*filename;
 	char			*fullpath;
 	char			err;
 	char			is_dir;
 	t_stat			fstat;
-}							t_lsarg;
-typedef struct				s_ls
+}						t_lsarg;
+typedef struct			s_ls
 {
 	short int		opts;
 	t_list			*args;
 	short int		count;
 	int				index;
+	int				console_width;
 	t_list			*fails;
-}							t_ls;
+}						t_ls;
 
-int				ls_parse_options(t_ls *ls, char **argv, int argc, char *e);
-int				ls_arg_to_list(t_ls *ls, char **argv,  int start, int end);
-int				ls_core(t_ls *ls, t_lsarg *data, t_list *lst);
-t_list			*ls_ftolist(t_ls *ls, char	*filename);
-void			ls_sort(t_ls * ls, t_list	**alist);
-int				ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth);
-int				ls_print_l(t_ls *ls, t_lsarg *data,  t_list *lst);
-char			*mkpth(char *a, char *b);
-void			ls_print_linked_file(t_lsarg *d);
-int				ls_print_size_min_maj(char t, int	*mM, t_stat *st);
-void			ls_set_lns_min_maj(int *thogsmM, t_stat *st);
-void			ls_del(void	*e, size_t s);
-int				ls_print_c(t_ls *ls, t_list *lst);
-int				ls_print_helper(t_ls *ls, t_lsarg *d, int w);
+int						ls_parse_options\
+							(t_ls *ls, char **argv, int argc, char *e);
+int						ls_arg_to_list\
+							(t_ls *ls, char **argv, int start, int end);
+int						ls_core(t_ls *ls, t_lsarg *data, t_list *lst);
+t_list					*ls_ftolist(t_ls *ls, char	*filename);
+void					ls_sort(t_ls *ls, t_list **alist);
+int						ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth);
+int						ls_print_l(t_ls *ls, t_lsarg *data, t_list *lst);
+char					*mkpth(char *a, char *b);
+void					ls_print_linked_file(t_lsarg *d);
+int						ls_print_size_min_maj(char t, int *mm, t_stat *st);
+void					ls_set_lns_min_maj(int *thogsmm, t_stat *st);
+void					ls_del(void	*e, size_t s);
+int						ls_print_c(t_ls *ls, t_list *lst);
+int						ls_print_helper(t_ls *ls, t_lsarg *d, int w);
 
 #endif

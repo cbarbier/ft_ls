@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:05:09 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/12 17:43:43 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/14 10:54:58 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ static void	ls_compute(t_ls *ls)
 
 int			main(int argc, char **argv)
 {
-	t_ls		ls;
-	char		error;
-	int			start;
+	t_ls			ls;
+	char			error;
+	int				start;
+	struct winsize	ws;
 
 	ft_bzero(&ls, sizeof(t_ls));
 	if ((start = ls_parse_options(&ls, argv, argc, &error)) < 0)
@@ -82,6 +83,8 @@ int			main(int argc, char **argv)
 		ft_printf("ft_ls: illegal option -- %c\n%s\n", error, USAGE);
 		exit(1);
 	}
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws);
+	ls.console_width = ws.ws_col;
 	ls_arg_to_list(&ls, argv, start, argc);
 	ls.count = argc - start;
 	ft_lstsort(ls.fails, ls_cmp_filename);
