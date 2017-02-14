@@ -31,6 +31,7 @@ static int	default_list(t_ls *ls, t_lsarg *data)
 int			ls_arg_to_list(t_ls *ls, char **argv, int start, int end)
 {
 	t_lsarg		data;
+	DIR		*dir;
 
 	bzero(&data, sizeof(t_lsarg));
 	if (start == end)
@@ -41,11 +42,13 @@ int			ls_arg_to_list(t_ls *ls, char **argv, int start, int end)
 		data.filename = ft_strdup(argv[start]);
 		data.fullpath = ft_strdup(argv[start]);
 		lstat(data.filename, &(data.fstat));
-		if (!opendir(argv[start]) && (data.err = errno)
+		if (!(dir = opendir(argv[start])) && (data.err = errno)
 				&& errno != EACCES && errno != ENOTDIR)
 			ft_lstpushback(&(ls->fails), ft_lstnew(&data, sizeof(t_lsarg)));
 		else
 			add_to_list_args(ls, &data);
+		if (dir)
+			closedir(dir);
 		start++;
 	}
 	return (end - start);

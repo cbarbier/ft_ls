@@ -14,14 +14,8 @@
 
 static t_list	*next_elem(t_list *lst, int ratio)
 {
-	t_list		*tmp;
-
 	while (lst && ratio--)
-	{
-		tmp = lst;
-		if (!(lst = lst->next))
-			return (tmp);
-	}
+		lst = lst->next;
 	return (lst);
 }
 
@@ -32,9 +26,11 @@ static int		ls_dashc_helper(t_ls *ls, t_list *lst, int ratio, int max)
 	int		stop;
 	t_list	*tmp;
 
-	if (!(rows = (int)((float)(ft_lstlen(lst)) / ratio + 0.5)))
+	if (!(rows = ft_lstlen(lst) / ratio))
 		rows = 1;
-	stop = rows + 1;
+	else if (ft_lstlen(lst) % ratio)
+		rows++;
+	stop = rows;
 	while (lst && stop--)
 	{
 		tmp = lst;

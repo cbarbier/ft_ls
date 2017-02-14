@@ -58,9 +58,13 @@ t_list			*ls_ftolist(t_ls *ls, char *filename)
 {
 	DIR			*directory;
 	t_lsarg		data;
+	char			*tmp;
 
 	bzero(&data, sizeof(t_lsarg));
-	data.filename = ft_strdup(filename);
+	if ((tmp = ft_strrchr(filename, '/')) && *(++tmp))
+		data.filename = ft_strdup(tmp);
+	else
+		data.filename = ft_strdup(filename);
 	data.fullpath = ft_strdup(filename);
 	lstat(filename, &(data.fstat));
 	if (!((data.fstat.st_mode & S_IFMT) == S_IFDIR))

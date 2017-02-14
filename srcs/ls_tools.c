@@ -26,12 +26,16 @@ void		ls_del(void *e, size_t s)
 char		*mkpth(char *a, char *b)
 {
 	int		len;
-	char	*res;
+	char		*res;
+	int		home;
 
-	len = ft_strlen(a) + ft_strlen(b) + 1;
+	home = ft_strcmp(a, "/") ? 1 : 0;
+	len = ft_strlen(a) + ft_strlen(b) + home;
 	if (!(res = ft_strnew(len)))
 		return (0);
-	ft_strcat(res, a);
+
+	if (home)
+		ft_strcat(res, a);
 	ft_strcat(res, "/");
 	ft_strcat(res, b);
 	return (res);

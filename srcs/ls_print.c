@@ -35,8 +35,7 @@ int			ls_print_helper(t_ls *ls, t_lsarg *d, int w)
 	char		tmp[42];
 	int			width;
 
-	if (d->err)
-		return (ft_printf("ft_ls: %s: %s", d->filename, strerror(d->err)));
+	//ft_printf("{grn}%s\n{no}", d->fullpath);
 	if ((ls->opts & LS_GG) && ls_set_color(tmp, &(d->fstat)))
 	{
 		ft_printf(tmp, 0, d->filename);
@@ -68,7 +67,9 @@ int			ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth)
 		write(1, "\n", 1);
 	if (d->is_dir && (ls->index || depth || ls->count > 1))
 		ft_printf("%s:\n", d->fullpath);
-	if (ls->opts & LS_L)
+	if (lst && (d->err = ((t_lsarg *)(lst->content))->err))
+		ft_printf("ft_ls: %s: %s", d->filename, strerror(d->err));
+	else if (ls->opts & LS_L)
 		ls_print_l(ls, d, lst);
 	else if (ls->opts & LS_CC)
 		ls_print_c(ls, lst);

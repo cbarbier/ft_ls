@@ -110,8 +110,11 @@ int			ls_print_l(t_ls *ls, t_lsarg *d, t_list *lst)
 	t_lsarg		*data;
 
 	set_lns(lst, thogsmm);
+	ft_printf("{grn}test\n{no}");
 	if (lst && d->is_dir)
 		ft_printf("total %d\n", thogsmm[0]);
+	if (d->err)
+		return (ls_print_helper(ls, d, 0));
 	while (lst && (data = (t_lsarg *)(lst->content)))
 	{
 		set_rights(tmp, data);
