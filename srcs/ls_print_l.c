@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 10:06:07 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/13 20:32:37 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 13:00:43 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	print_date(char *tmp, time_t fdate)
 	ft_printf("%s ", tmp);
 }
 
-static void	set_lns(t_list *lst, int *thogsmm)
+static int	set_lns(t_list *lst, int *thogsmm)
 {
 	int		res;
 	t_stat	*st;
@@ -56,6 +56,7 @@ static void	set_lns(t_list *lst, int *thogsmm)
 	}
 	if (thogsmm[4] < (res = thogsmm[5] + thogsmm[6] + 2))
 		thogsmm[4] = res;
+	return (1);
 }
 
 static char	set_typeoffile(t_stat *st)
@@ -78,7 +79,7 @@ static char	set_typeoffile(t_stat *st)
 		return ('-');
 }
 
-static void	set_rights(char *tmp, t_lsarg *data)
+static int	set_rights(char *tmp, t_lsarg *data)
 {
 	bzero(tmp, 42 * sizeof(char));
 	tmp[0] = set_typeoffile(&(data->fstat));
@@ -100,7 +101,8 @@ static void	set_rights(char *tmp, t_lsarg *data)
 		tmp[9] = (data->fstat.st_mode & S_IXOTH ? 't' : 'T');
 	else
 		tmp[9] = (data->fstat.st_mode & S_IXOTH ? 'x' : '-');
-	tmp[10] = ' ';
+	tmp[100] = ' ';
+	return (1);
 }
 
 int			ls_print_l(t_ls *ls, t_lsarg *d, t_list *lst)
@@ -109,15 +111,12 @@ int			ls_print_l(t_ls *ls, t_lsarg *d, t_list *lst)
 	int			thogsmm[7];
 	t_lsarg		*data;
 
-	set_lns(lst, thogsmm);
-	ft_printf("{grn}test\n{no}");
-	if (lst && d->is_dir)
+	if (set_lns(lst, thogsmm) && lst && d->is_dir)
 		ft_printf("total %d\n", thogsmm[0]);
 	if (d->err)
 		return (ls_print_helper(ls, d, 0));
-	while (lst && (data = (t_lsarg *)(lst->content)))
+	while (lst && (data = (t_lsarg *)(lst->content)) && set_rights(tmp, data))
 	{
-		set_rights(tmp, data);
 		ft_printf("%s %*d ", tmp, thogsmm[1], data->fstat.st_nlink);
 		if (!(ls->opts & LS_G))
 			ft_printf("%-*s  ", thogsmm[2],\

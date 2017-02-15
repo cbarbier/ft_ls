@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 15:18:39 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/14 20:02:09 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 13:26:53 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@ static t_list	*next_elem(t_list *lst, int ratio)
 	return (lst);
 }
 
+static int		calc_rows(int ln, int ratio)
+{
+	int rows;
+
+	if (!(rows = ln / ratio))
+		rows = 1;
+	else if (ln % ratio)
+		rows++;
+	return (rows);
+}
+
 static int		ls_dashc_helper(t_ls *ls, t_list *lst, int ratio, int max)
 {
 	int		rate;
@@ -26,10 +37,7 @@ static int		ls_dashc_helper(t_ls *ls, t_list *lst, int ratio, int max)
 	int		stop;
 	t_list	*tmp;
 
-	if (!(rows = ft_lstlen(lst) / ratio))
-		rows = 1;
-	else if (ft_lstlen(lst) % ratio)
-		rows++;
+	rows = calc_rows(ft_lstlen(lst), ratio);
 	stop = rows;
 	while (lst && stop--)
 	{

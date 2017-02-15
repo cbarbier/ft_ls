@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 15:19:26 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/14 14:50:59 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 13:22:13 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	add_to_list_args(t_ls *ls, t_lsarg *d)
 
 static int	default_list(t_ls *ls, t_lsarg *data)
 {
+	bzero(&data, sizeof(t_lsarg));
 	data->filename = ft_strdup(".");
 	data->fullpath = ft_strdup(".");
 	data->is_dir = 1;
@@ -31,9 +32,8 @@ static int	default_list(t_ls *ls, t_lsarg *data)
 int			ls_arg_to_list(t_ls *ls, char **argv, int start, int end)
 {
 	t_lsarg		data;
-	DIR		*dir;
+	DIR			*dir;
 
-	bzero(&data, sizeof(t_lsarg));
 	if (start == end)
 		return (default_list(ls, &data));
 	while (start < end)
@@ -42,9 +42,12 @@ int			ls_arg_to_list(t_ls *ls, char **argv, int start, int end)
 		data.filename = ft_strdup(argv[start]);
 		data.fullpath = ft_strdup(argv[start]);
 		lstat(data.filename, &(data.fstat));
-		if (!(dir = opendir(argv[start])) && (data.err = errno)
+		if (!(dir = opendir(argv[start]))
 				&& errno != EACCES && errno != ENOTDIR)
+		{
+			data.err = errno;
 			ft_lstpushback(&(ls->fails), ft_lstnew(&data, sizeof(t_lsarg)));
+		}
 		else
 			add_to_list_args(ls, &data);
 		if (dir)

@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 20:48:04 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/14 19:33:38 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 12:53:50 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int			ls_print_helper(t_ls *ls, t_lsarg *d, int w)
 	char		tmp[42];
 	int			width;
 
-	//ft_printf("{grn}%s\n{no}", d->fullpath);
 	if ((ls->opts & LS_GG) && ls_set_color(tmp, &(d->fstat)))
 	{
 		ft_printf(tmp, 0, d->filename);
@@ -68,7 +67,7 @@ int			ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth)
 	if (d->is_dir && (ls->index || depth || ls->count > 1))
 		ft_printf("%s:\n", d->fullpath);
 	if (lst && (d->err = ((t_lsarg *)(lst->content))->err))
-		ft_printf("ft_ls: %s: %s", d->filename, strerror(d->err));
+		ft_printf("ft_ls: %s: %s\n", d->filename, strerror(d->err));
 	else if (ls->opts & LS_L)
 		ls_print_l(ls, d, lst);
 	else if (ls->opts & LS_CC)

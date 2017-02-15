@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 17:46:13 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/12 16:59:01 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 13:27:36 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,14 @@ void		ls_del(void *e, size_t s)
 
 char		*mkpth(char *a, char *b)
 {
-	int		len;
+	int			len;
 	char		*res;
-	int		home;
+	int			home;
 
 	home = ft_strcmp(a, "/") ? 1 : 0;
 	len = ft_strlen(a) + ft_strlen(b) + home;
 	if (!(res = ft_strnew(len)))
 		return (0);
-
 	if (home)
 		ft_strcat(res, a);
 	ft_strcat(res, "/");

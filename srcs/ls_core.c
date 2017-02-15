@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:12:17 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/14 19:52:04 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 13:17:49 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int			ls_core(t_ls *ls, t_lsarg *d, t_list *lst)
 		ft_lstdel(&lst, ls_del);
 		return (1);
 	}
-	head = lst;
 	while (lst)
 	{
 		data = (t_lsarg *)(lst->content);
-		if ((data->fstat.st_mode & S_IFDIR) && !data->err
-			&& (data->fstat.st_mode &S_IFMT) != S_IFBLK
+		if (((data->fstat.st_mode & S_IFMT) == S_IFDIR) && !data->err
+			&& (data->fstat.st_mode & S_IFMT) != S_IFBLK
 			&& ft_strcmp(data->filename, ".")
 			&& ft_strcmp(data->filename, ".."))
 			ls_core(ls, data, ls_ftolist(ls, data->fullpath));
+		head = lst;
 		lst = lst->next;
 	}
 	ft_lstdel(&head, ls_del);
