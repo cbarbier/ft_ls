@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 15:19:26 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 13:22:13 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 15:46:49 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	add_to_list_args(t_ls *ls, t_lsarg *d)
 
 static int	default_list(t_ls *ls, t_lsarg *data)
 {
-	bzero(&data, sizeof(t_lsarg));
+	bzero(data, sizeof(t_lsarg));
 	data->filename = ft_strdup(".");
 	data->fullpath = ft_strdup(".");
 	data->is_dir = 1;
