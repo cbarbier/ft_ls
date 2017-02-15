@@ -6,13 +6,13 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 20:48:43 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/13 14:58:07 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 18:49:06 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-static int		ls_cmp_filename(t_list *a, t_list *b)
+int				ls_cmp_filename(t_list *a, t_list *b)
 {
 	char *fa;
 	char *fb;

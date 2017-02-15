@@ -6,21 +6,11 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:05:09 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 16:34:58 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 18:58:20 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
-
-static int	ls_cmp_filename(t_list *a, t_list *b)
-{
-	char		*fa;
-	char		*fb;
-
-	fa = ((t_lsarg *)(a->content))->filename;
-	fb = ((t_lsarg *)(b->content))->filename;
-	return (ft_strcmp(fa, fb));
-}
 
 static int	ls_cmp_type_ascii(t_list *a, t_list *b)
 {
@@ -70,6 +60,20 @@ static void	ls_compute(t_ls *ls)
 	}
 }
 
+static int	ls_exit_on_emptyarg(char **ag, int start, int end)
+{
+	while (start < end)
+	{
+		if (!ft_strcmp(ag[start], ""))
+		{
+			ft_putstr("ft_ls: fts_open: No such file or directory\n");
+			exit(1);
+		}
+		start++;
+	}
+	return (1);
+}
+
 int			main(int argc, char **argv)
 {
 	t_ls			ls;
@@ -83,6 +87,7 @@ int			main(int argc, char **argv)
 		ft_printf("ft_ls: illegal option -- %c\n%s\n", error, USAGE);
 		exit(1);
 	}
+	ls_exit_on_emptyarg(argv, start, argc);
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws);
 	ls.console_width = ws.ws_col;
 	ls_arg_to_list(&ls, argv, start, argc);

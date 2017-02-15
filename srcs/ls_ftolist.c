@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 18:31:14 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 13:22:52 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 17:43:53 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_list			*ls_ftolist(t_ls *ls, char *filename)
 	char		*tmp;
 
 	bzero(&data, sizeof(t_lsarg));
-	if ((tmp = ft_strrchr(filename, '/')) && *(++tmp))
+	if (data.err && (tmp = ft_strrchr(filename, '/')) && *(++tmp))
 		data.filename = ft_strdup(tmp);
 	else
 		data.filename = ft_strdup(filename);
