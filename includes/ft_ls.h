@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/14 19:10:21 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 14:45:43 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "../libft/includes/libft.h"
 # include <dirent.h>
 # include <sys/stat.h>
+# include <sys/xattr.h>
+# include <sys/acl.h>
 # include <sys/types.h>
 # include <pwd.h>
 # include <grp.h>
@@ -75,5 +77,6 @@ void					ls_set_lns_min_maj(int *thogsmm, t_stat *st);
 void					ls_del(void	*e, size_t s);
 int						ls_print_c(t_ls *ls, t_list *lst);
 int						ls_print_helper(t_ls *ls, t_lsarg *d, int w);
+int						ls_set_acl(char *c, t_lsarg *d);
 
 #endif

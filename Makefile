@@ -6,7 +6,7 @@
 #    By: jgengo <jgengo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/18 14:05:46 by jgengo            #+#    #+#              #
-#    Updated: 2017/02/13 18:50:32 by cbarbier         ###   ########.fr        #
+#    Updated: 2017/02/15 14:41:46 by cbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS			= srcs/ls_parse.c \
 				  srcs/ls_print_c.c \
 				  srcs/ls_core.c \
 				  srcs/ls_tools.c \
+				  srcs/ls_tools2.c \
 				  srcs/ft_ls.c
 
 OBJS			= $(SRCS:.c=.o)

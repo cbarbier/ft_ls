@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 10:06:07 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 13:00:43 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/15 14:38:22 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static int	set_rights(char *tmp, t_lsarg *data)
 		tmp[9] = (data->fstat.st_mode & S_IXOTH ? 't' : 'T');
 	else
 		tmp[9] = (data->fstat.st_mode & S_IXOTH ? 'x' : '-');
-	tmp[100] = ' ';
+	ls_set_acl(tmp + 10, data);
 	return (1);
 }
 
