@@ -6,7 +6,7 @@
 #    By: jgengo <jgengo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/18 14:05:46 by jgengo            #+#    #+#              #
-#    Updated: 2017/02/15 14:41:46 by cbarbier         ###   ########.fr        #
+#    Updated: 2017/02/16 11:54:53 by cbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,24 +29,33 @@ SRCS			= srcs/ls_parse.c \
 
 OBJS			= $(SRCS:.c=.o)
 
-all: $(NAME)
+	
+all: display $(NAME)
 
+display:
+	@echo "\n\n"
+	@echo "\033[46;35;1m ____   _____         _       ____ \033[0m"
+	@echo "\033[46;35;1m|  _ | |_   _|       | |     |   _|\033[0m"
+	@echo "\033[46;35;1m| |__    | |         | |     |   \ \033[0m"
+	@echo "\033[46;35;1m|  __|   | |   ____  | |__    _\  |\033[0m"
+	@echo "\033[46;35;1m|_|      |_|  |____| |____|  |____|\033[0m\n\n"
+	@echo "By : \033[0;31mcbarbier@student.42.fr\033[0m"
 %.o:%.c
-	gcc $(CFLAGS) -c $< $(INCLUDES) -o $@
+	@gcc $(CFLAGS) -c $< $(INCLUDES) -o $@
 
 $(NAME): $(LIB) $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Llibft -lft
-
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Llibft -lft
+	@echo "FT_LS COMPILED\t\t\033[0;32m✓\033[0m"
 $(LIB):
-	make -C libft
+	@make -C libft
 
 clean:
-	make -C libft clean
-	/bin/rm -f $(OBJS)
+	@make -C libft clean
+	@/bin/rm -f $(OBJS)
 
 fclean: clean
-	/bin/rm -f $(LIB)
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(LIB)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 
