@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 18:31:14 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 17:43:53 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 08:17:41 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_list	*read_to_list(t_ls *ls, char *filename, DIR *directory)
 		{
 			bzero(&data, sizeof(t_lsarg));
 			data.fullpath = mkpth(filename, ret->d_name);
-			lstat(data.fullpath, &(data.fstat));
+			ls_stat(ls, data.fullpath, &(data.fstat));
 			data.filename = ls_handle_dashff(ls, &(data.fstat), ret->d_name);
 			data.is_dir = (data.fstat.st_mode & S_IFMT) == S_IFDIR ? 1 : 0;
 			ft_lstadd(&lst, ft_lstnew(&data, sizeof(t_lsarg)));
@@ -66,7 +66,7 @@ t_list			*ls_ftolist(t_ls *ls, char *filename)
 	else
 		data.filename = ft_strdup(filename);
 	data.fullpath = ft_strdup(filename);
-	lstat(filename, &(data.fstat));
+	ls_stat(ls, filename, &(data.fstat));
 	if (!((data.fstat.st_mode & S_IFMT) == S_IFDIR))
 		return (ft_lstnew(&data, sizeof(t_lsarg)));
 	if (!(directory = opendir(filename)))

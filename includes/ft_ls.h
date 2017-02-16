@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 18:48:50 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 08:15:53 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ int						ls_print_c(t_ls *ls, t_list *lst);
 int						ls_print_helper(t_ls *ls, t_lsarg *d, int w);
 int						ls_set_acl(char *c, t_lsarg *d);
 int						ls_cmp_filename(t_list *a, t_list *b);
+int						ls_stat(t_ls *ls, char *f, t_stat *st);
 
 #endif

@@ -6,11 +6,19 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:27:06 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 14:46:41 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 08:19:15 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+int			ls_stat(t_ls *ls, char *f, t_stat *st)
+{
+	lstat(f, st);
+	if (!((ls->opts & LS_L) && (st->st_mode & S_IFMT) == S_IFLNK))
+		stat(f, st);
+	return (1);
+}
 
 int			ls_set_acl(char *c, t_lsarg *d)
 {
