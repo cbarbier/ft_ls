@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 17:46:13 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 13:27:36 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 18:33:03 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ char		*mkpth(char *a, char *b)
 	char		*res;
 	int			home;
 
-	home = ft_strcmp(a, "/") ? 1 : 0;
-	len = ft_strlen(a) + ft_strlen(b) + home;
+	home = a[(len = ft_strlen(a)) - 1] == '/' ? 1 : 0;
+	len += ft_strlen(b) + home;
 	if (!(res = ft_strnew(len)))
 		return (0);
+	ft_strcat(res, a);
 	if (home)
-		ft_strcat(res, a);
-	ft_strcat(res, "/");
+		ft_strcat(res, "/");
 	ft_strcat(res, b);
 	return (res);
 }

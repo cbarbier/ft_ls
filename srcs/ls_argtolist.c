@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 15:19:26 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/16 11:11:29 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 17:41:15 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	add_to_lists(t_ls *ls, t_lsarg *d)
 	if ((d->fstat.st_mode & S_IFMT) == S_IFDIR)
 	{
 		d->is_dir = 1;
+		if (!((d->fstat.st_mode & S_IXUSR) && (d->fstat.st_mode & S_IRUSR)))
+			d->err = 1;
 		ft_lstpushback(&(ls->args), ft_lstnew(d, sizeof(t_lsarg)));
 	}
 	else
@@ -26,6 +28,7 @@ static void	add_to_lists(t_ls *ls, t_lsarg *d)
 static int	default_list(t_ls *ls, t_lsarg *data)
 {
 	bzero(data, sizeof(t_lsarg));
+	ls_stat(ls, ".", &(data->fstat));
 	data->filename = ft_strdup(".");
 	data->fullpath = ft_strdup(".");
 	data->is_dir = 1;
@@ -43,9 +46,9 @@ int			ls_arg_to_list(t_ls *ls, char **argv, int start, int end)
 	while (start < end)
 	{
 		bzero(&data, sizeof(t_lsarg));
-		data.filename = ft_strdup(argv[start]);
+		data.filename = ls_get_filename(argv[start]);
 		data.fullpath = ft_strdup(argv[start]);
-		ls_stat(ls, data.filename, &(data.fstat));
+		ls_stat(ls, data.fullpath, &(data.fstat));
 		if (!(dir = opendir(argv[start]))
 			&& errno != EACCES && errno != ENOTDIR)
 		{

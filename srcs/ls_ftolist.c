@@ -6,13 +6,13 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 18:31:14 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/16 08:17:41 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 19:03:56 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-static char		*ls_handle_dashff(t_ls *ls, t_stat *st, char *filename)
+char			*ls_handle_dashff(t_ls *ls, t_stat *st, char *filename)
 {
 	if (!(ls->opts & LS_FF))
 		return (ft_strdup(filename));
@@ -31,50 +31,37 @@ static char		*ls_handle_dashff(t_ls *ls, t_stat *st, char *filename)
 	return (ft_strdup(filename));
 }
 
-static t_list	*read_to_list(t_ls *ls, char *filename, DIR *directory)
+static t_list	*read_to_list(t_ls *ls, t_lsarg *data, DIR *directory)
 {
 	t_dir		*ret;
-	t_lsarg		data;
+	t_lsarg		d;
 	t_list		*lst;
 
 	lst = 0;
-	while ((ret = readdir(directory)))
+	while ((ret = readdir(directory)) > 0)
 	{
 		if (!(!(ls->opts & LS_A) && (!ft_strncmp(ret->d_name, ".", 1))))
 		{
-			bzero(&data, sizeof(t_lsarg));
-			data.fullpath = mkpth(filename, ret->d_name);
-			ls_stat(ls, data.fullpath, &(data.fstat));
-			data.filename = ls_handle_dashff(ls, &(data.fstat), ret->d_name);
-			data.is_dir = (data.fstat.st_mode & S_IFMT) == S_IFDIR ? 1 : 0;
-			ft_lstadd(&lst, ft_lstnew(&data, sizeof(t_lsarg)));
+			bzero(&d, sizeof(t_lsarg));
+			d.fullpath = mkpth(data->fullpath, ret->d_name);
+			ls_stat(ls, d.fullpath, &(d.fstat));
+			d.filename = ft_strdup(ret->d_name);
+			d.is_dir = (d.fstat.st_mode & S_IFMT) == S_IFDIR ? 1 : 0;
+			if (d.is_dir &&
+			!((d.fstat.st_mode & S_IXUSR) && (d.fstat.st_mode & S_IRUSR)))
+				d.err = 1;
+			ft_lstadd(&lst, ft_lstnew(&d, sizeof(t_lsarg)));
 		}
 	}
 	closedir(directory);
 	return (lst);
 }
 
-t_list			*ls_ftolist(t_ls *ls, char *filename)
+t_list			*ls_ftolist(t_ls *ls, t_lsarg *d)
 {
 	DIR			*directory;
-	t_lsarg		data;
-	char		*tmp;
 
-	bzero(&data, sizeof(t_lsarg));
-	if (data.err && (tmp = ft_strrchr(filename, '/')) && *(++tmp))
-		data.filename = ft_strdup(tmp);
-	else
-		data.filename = ft_strdup(filename);
-	data.fullpath = ft_strdup(filename);
-	ls_stat(ls, filename, &(data.fstat));
-	if (!((data.fstat.st_mode & S_IFMT) == S_IFDIR))
-		return (ft_lstnew(&data, sizeof(t_lsarg)));
-	if (!(directory = opendir(filename)))
-	{
-		data.err = errno;
-		return (ft_lstnew(&data, sizeof(t_lsarg)));
-	}
-	ft_strdel(&(data.filename));
-	ft_strdel(&(data.fullpath));
-	return (read_to_list(ls, filename, directory));
+	if (!(directory = opendir(d->fullpath)))
+		return (0);
+	return (read_to_list(ls, d, directory));
 }

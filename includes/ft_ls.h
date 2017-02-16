@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/16 10:19:55 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 17:42:34 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int						ls_parse_options\
 int						ls_arg_to_list\
 							(t_ls *ls, char **argv, int start, int end);
 int						ls_core(t_ls *ls, t_lsarg *data, t_list *lst);
-t_list					*ls_ftolist(t_ls *ls, char	*filename);
+t_list					*ls_ftolist(t_ls *ls, t_lsarg *data);
 void					ls_sort(t_ls *ls, t_list **alist);
 int						ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth);
 int						ls_print_l(t_ls *ls, t_lsarg *data, t_list *lst);
@@ -81,5 +81,7 @@ int						ls_print_helper(t_ls *ls, t_lsarg *d, int w);
 int						ls_set_acl(char *c, t_lsarg *d);
 int						ls_cmp_filename(t_list *a, t_list *b);
 int						ls_stat(t_ls *ls, char *f, t_stat *st);
+char					*ls_get_filename(char *filename);
+char					*ls_handle_dashff(t_ls *ls, t_stat *st, char *filename);
 
 #endif
