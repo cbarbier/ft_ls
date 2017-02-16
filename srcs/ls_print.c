@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 20:48:04 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 12:53:50 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 11:27:10 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ static int	ls_set_color(char *tmp, t_stat *st)
 		ft_strcpy(tmp, "\e[96m%*s{no}");
 	else if ((st->st_mode & S_IFMT) == S_IFLNK)
 		ft_strcpy(tmp, "\033[35m%*s{no}");
+	else if ((st->st_mode & S_IFMT) == S_IFSOCK)
+		ft_strcpy(tmp, "\033[32%*s{no}");
+	else if ((st->st_mode & S_IFMT) == S_IFIFO)
+		ft_strcpy(tmp, "\033[33%*s{no}");
 	else if ((st->st_mode & S_IFMT) == S_IFBLK)
 		ft_strcpy(tmp, "\e[106m\033[34m%*s{no}");
 	else if ((st->st_mode & S_IFMT) == S_IFCHR)
 		ft_strcpy(tmp, "\033[43m\033[34m%*s{no}");
-	else if (st->st_mode & S_IXUSR)
-		ft_strcpy(tmp, "{red}%*s{no}");
+	else if ((st->st_mode & S_IFMT) == S_IFREG && (st->st_mode & S_IXUSR))
+		ft_strcpy(tmp, "\033[31m%*s{no}");
 	else
 		ft_strcpy(tmp, "%*s");
 	return (1);
@@ -64,7 +68,8 @@ int			ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth)
 {
 	if (d->is_dir && !(!ls->index && !depth) && (ls->index || depth))
 		write(1, "\n", 1);
-	if (d->is_dir && (ls->index || depth || ls->count > 1))
+	if (d->is_dir && (ls->fails || ls->files
+		|| ls->index || depth || ls->count > 1))
 		ft_printf("%s:\n", d->fullpath);
 	if (lst && (d->err = ((t_lsarg *)(lst->content))->err))
 		ft_printf("ft_ls: %s: %s\n", d->filename, strerror(d->err));

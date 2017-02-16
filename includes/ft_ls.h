@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:25:59 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/16 08:15:53 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 10:19:55 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct			s_ls
 {
 	short int		opts;
 	t_list			*args;
+	t_list			*files;
 	short int		count;
 	int				index;
 	int				console_width;

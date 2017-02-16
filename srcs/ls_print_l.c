@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 10:06:07 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 14:38:22 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 11:26:50 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ static void	print_date(char *tmp, time_t fdate)
 	ft_printf("%s ", tmp);
 }
 
-static int	set_lns(t_list *lst, int *thogsmm)
+static int	set_lns(t_list **alst, int *thogsmm)
 {
 	int		res;
 	t_stat	*st;
+	t_list	*lst;
 
+	lst = *alst;
 	bzero(thogsmm, 7 * sizeof(int));
 	while (lst)
 	{
@@ -111,7 +113,7 @@ int			ls_print_l(t_ls *ls, t_lsarg *d, t_list *lst)
 	int			thogsmm[7];
 	t_lsarg		*data;
 
-	if (set_lns(lst, thogsmm) && lst && d->is_dir)
+	if (set_lns(&lst, thogsmm) && lst && d->is_dir)
 		ft_printf("total %d\n", thogsmm[0]);
 	if (d->err)
 		return (ls_print_helper(ls, d, 0));

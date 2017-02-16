@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 15:05:09 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/15 18:58:20 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/16 11:18:53 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ static void	ls_compute(t_ls *ls)
 
 	lst = ls->args;
 	ft_lstsort(lst, ls_cmp_type_ascii);
+	if (ls->files)
+	{
+		data = (t_lsarg *)ft_memalloc(sizeof(t_lsarg));
+		ls_core(ls, data, ls->files);
+		free(data);
+	}
 	while (lst)
 	{
 		data = (t_lsarg *)(lst->content);
