@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:27:06 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/17 11:43:14 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/17 15:19:25 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char		*ls_get_filename(char *filename)
 int			ls_stat(t_ls *ls, char *f, t_stat *st)
 {
 	lstat(f, st);
-	if (!((((ls->opts & LS_L) || (ls->opts & LS_RR))
+	if (!(((ls->opts & LS_L)
 		&& (st->st_mode & S_IFMT) == S_IFLNK)))
 		stat(f, st);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 20:48:04 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/17 12:12:50 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/17 15:20:17 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int			ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth)
 				|| ls->index || depth || ls->count > 1))
 		ft_printf("%s:\n", d->fullpath);
 	if (d->is_dir && d->err)
-		return (ls_print_error(ls, d, lst));
-	if (ls->opts & LS_L)
+		ls_print_error(ls, d, lst);
+	else if (ls->opts & LS_L)
 		ls_print_l(ls, d, lst);
 	else if (ls->opts & LS_CC)
 		ls_print_c(ls, lst);

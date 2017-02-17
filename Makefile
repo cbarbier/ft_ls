@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jgengo <jgengo@student.42.fr>              +#+  +:+       +#+         #
+#    By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/11/18 14:05:46 by jgengo            #+#    #+#              #
-#    Updated: 2017/02/16 13:59:23 by cbarbier         ###   ########.fr        #
+#    Created: 2017/02/17 16:02:34 by cbarbier          #+#    #+#              #
+#    Updated: 2017/02/17 16:05:45 by cbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,17 +46,14 @@ display:
 $(NAME): $(LIB) $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Llibft -lft
 	@echo "FT_LS COMPILED\t\t\033[0;32m✓\033[0m"
-$(LIB):
-	@make -C libft
-
 clean:
 	@make -C libft clean
 	@/bin/rm -f $(OBJS)
-
+$(LIB):
+	@make -C libft
 fclean: clean
 	@/bin/rm -f $(LIB)
 	@/bin/rm -f $(NAME)
-
 re: fclean all
 
 .PHONY: clean fclean all re

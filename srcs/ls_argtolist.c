@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 15:19:26 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/16 17:41:15 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/17 14:18:01 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			ls_arg_to_list(t_ls *ls, char **argv, int start, int end)
 	while (start < end)
 	{
 		bzero(&data, sizeof(t_lsarg));
-		data.filename = ls_get_filename(argv[start]);
+		data.filename = ft_strdup(argv[start]);
 		data.fullpath = ft_strdup(argv[start]);
 		ls_stat(ls, data.fullpath, &(data.fstat));
 		if (!(dir = opendir(argv[start]))
