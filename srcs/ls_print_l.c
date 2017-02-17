@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 10:06:07 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/16 11:26:50 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/17 13:26:59 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,6 @@ int			ls_print_l(t_ls *ls, t_lsarg *d, t_list *lst)
 
 	if (set_lns(&lst, thogsmm) && lst && d->is_dir)
 		ft_printf("total %d\n", thogsmm[0]);
-	if (d->err)
-		return (ls_print_helper(ls, d, 0));
 	while (lst && (data = (t_lsarg *)(lst->content)) && set_rights(tmp, data))
 	{
 		ft_printf("%s %*d ", tmp, thogsmm[1], data->fstat.st_nlink);

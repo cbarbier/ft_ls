@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 18:31:14 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/16 19:03:56 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/17 12:06:54 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ t_list			*ls_ftolist(t_ls *ls, t_lsarg *d)
 	DIR			*directory;
 
 	if (!(directory = opendir(d->fullpath)))
+	{
+		d->err = 1;
 		return (0);
+	}
 	return (read_to_list(ls, d, directory));
 }

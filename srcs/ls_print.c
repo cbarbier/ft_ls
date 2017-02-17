@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 20:48:04 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/16 18:59:21 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/17 12:12:50 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,24 @@ static int	ls_print_classic(t_ls *ls, t_list *lst)
 static int	ls_print_error(t_ls *ls, t_lsarg *data, t_list *lst)
 {
 	t_lsarg		*d;
+	t_list		*tmp;
 
+	tmp = lst;
 	while (lst)
 	{
 		d = (t_lsarg *)(lst->content);
 		ft_printf("ft_ls: %s: Permission denied\n", d->filename);
 		lst = lst->next;
 	}
-	if (ls)
+	if ((ls->opts & LS_RR) || !tmp)
 		ft_printf("ft_ls: %s: Permission denied\n", data->filename);
 	return (1);
 }
 
 int			ls_print(t_ls *ls, t_lsarg *d, t_list *lst, int depth)
 {
-	if (d->is_dir && !(!ls->index && !depth) && (ls->index || depth))
+	if (d->is_dir && !(!ls->index && !depth)
+		&& (depth || ls->index || ls->count > 1))
 		write(1, "\n", 1);
 	if (d->is_dir && (ls->fails || ls->files
 				|| ls->index || depth || ls->count > 1))
