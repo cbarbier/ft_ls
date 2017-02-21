@@ -6,7 +6,7 @@
 /*   By: cbarbier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 20:48:04 by cbarbier          #+#    #+#             */
-/*   Updated: 2017/02/17 15:20:17 by cbarbier         ###   ########.fr       */
+/*   Updated: 2017/02/21 16:15:56 by cbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ static int	ls_print_error(t_ls *ls, t_lsarg *data, t_list *lst)
 	while (lst)
 	{
 		d = (t_lsarg *)(lst->content);
-		ft_printf("ft_ls: %s: Permission denied\n", d->filename);
+		ft_printf("ft_ls: %s: %s\n", d->filename, strerror(d->err));
 		lst = lst->next;
 	}
 	if ((ls->opts & LS_RR) || !tmp)
-		ft_printf("ft_ls: %s: Permission denied\n", data->filename);
+		ft_printf("ft_ls: %s: %s\n", data->filename, strerror(data->err));
 	return (1);
 }
 
