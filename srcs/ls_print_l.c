@@ -88,13 +88,13 @@ static int	set_rights(char *tmp, t_lsarg *data)
 	tmp[1] = (data->fstat.st_mode & S_IRUSR ? 'r' : '-');
 	tmp[2] = (data->fstat.st_mode & S_IWUSR ? 'w' : '-');
 	if (data->fstat.st_mode & S_ISUID)
-		tmp[3] = (data->fstat.st_mode & S_IXUSR ? 'S' : 's');
+		tmp[3] = (data->fstat.st_mode & S_IXUSR ? 's' : 'S');
 	else
 		tmp[3] = (data->fstat.st_mode & S_IXUSR ? 'x' : '-');
 	tmp[4] = (data->fstat.st_mode & S_IRGRP ? 'r' : '-');
 	tmp[5] = (data->fstat.st_mode & S_IWGRP ? 'w' : '-');
 	if (data->fstat.st_mode & S_ISGID)
-		tmp[6] = (data->fstat.st_mode & S_IXGRP ? 'S' : 's');
+		tmp[6] = (data->fstat.st_mode & S_IXGRP ? 's' : 'S');
 	else
 		tmp[6] = (data->fstat.st_mode & S_IXGRP ? 'x' : '-');
 	tmp[7] = (data->fstat.st_mode & S_IROTH ? 'r' : '-');

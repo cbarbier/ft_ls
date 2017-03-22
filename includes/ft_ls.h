@@ -26,8 +26,8 @@
 # include <string.h>
 # include <errno.h>
 # include <sys/ioctl.h>
-# define USAGE		"usage: ft_ls [-lraRtC1goGFS] [file ...]"
-# define OPTIONS	"lratRC1goGFS"
+# define USAGE		"usage: ft_ls [-lraRtC1goGS] [file ...]"
+# define OPTIONS	"lratRC1goGS"
 # define LS_L		1
 # define LS_R		2
 # define LS_A		4
@@ -38,8 +38,7 @@
 # define LS_G		128
 # define LS_O		256
 # define LS_GG		512
-# define LS_FF		1024
-# define LS_SS		2048
+# define LS_SS		1024
 
 typedef struct dirent	t_dir;
 typedef struct stat		t_stat;

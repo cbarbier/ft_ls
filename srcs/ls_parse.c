@@ -14,29 +14,27 @@
 
 static void		ls_set_options(t_ls *ls, char opt)
 {
-	if (opt == 'l')
+	if (opt == 'l' && !(ls->opts & LS_L))
 		ls->opts += LS_L;
-	else if (opt == 'r')
+	else if (opt == 'r' && !(ls->opts & LS_R))
 		ls->opts += LS_R;
-	else if (opt == 'a')
+	else if (opt == 'a' && !(ls->opts & LS_A))
 		ls->opts += LS_A;
-	else if (opt == 't')
+	else if (opt == 't' && !(ls->opts & LS_T))
 		ls->opts += LS_T;
-	else if (opt == 'R')
+	else if (opt == 'R' && !(ls->opts & LS_RR))
 		ls->opts += LS_RR;
-	else if (opt == 'C')
+	else if (opt == 'C' && !(ls->opts & LS_CC))
 		ls->opts += LS_CC - (ls->opts & LS_1 ? LS_1 : 0);
-	else if (opt == '1')
+	else if (opt == '1' && !(ls->opts & LS_1))
 		ls->opts += LS_1 - (ls->opts & LS_CC ? LS_CC : 0);
-	else if (opt == 'o')
+	else if (opt == 'o' && !(ls->opts & LS_O))
 		ls->opts += LS_O + (ls->opts & LS_L ? 0 : LS_L);
-	else if (opt == 'g')
+	else if (opt == 'g' && !(ls->opts & LS_G))
 		ls->opts += LS_G + (ls->opts & LS_L ? 0 : LS_L);
-	else if (opt == 'G')
+	else if (opt == 'G' && !(ls->opts & LS_GG))
 		ls->opts += LS_GG;
-	else if (opt == 'F')
-		ls->opts += LS_FF;
-	else if (opt == 'S')
+	else if (opt == 'S' && !(ls->opts & LS_SS))
 		ls->opts += LS_SS;
 }
 

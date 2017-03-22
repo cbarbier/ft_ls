@@ -71,7 +71,7 @@ int				ls_print_c(t_ls *ls, t_list *lst)
 			max = val;
 		tmp = tmp->next;
 	}
-	val = ls->console_width / (ls->opts & LS_FF ? (max + 2) : (max + 1));
+	val = ls->console_width /(max + 1);
 	ls_dashc_helper(ls, lst, val, max);
 	return (1);
 }
